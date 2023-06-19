@@ -7,23 +7,24 @@ app.use(cors())
 // Middleware to parse JSON data
 app.use(express.json());
 
+await load()
 
 
-// // POST /tasks - Create a new task
-// app.post('/tasks', async (req, res) => {
+// POST /tasks - Create a new task
+app.post('/tasks', async (req, res) => {
 
-//     try {
-//         console.log(req.body)
-//         let result = await askAi(req.body.question, req.prompt)
-//         console.log(result)
-//         res.status(201).json(result.text);
+    try {
+        console.log(req.body)
+        let result = await askAi(req.body.question, req.prompt)
+        console.log(result)
+        res.status(201).json(result.text);
 
-//     } catch (e) {
-//         console.log(e)
-//         res.status(500).json(e);
-//     }
+    } catch (e) {
+        console.log(e)
+        res.status(500).json(e);
+    }
 
-// });
+});
 
 app.get('/t', async (req, res) => {
 

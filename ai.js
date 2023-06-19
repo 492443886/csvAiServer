@@ -10,9 +10,10 @@ import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { CSVLoader } from "langchain/document_loaders/fs/csv";
 import { SystemChatMessage } from "langchain/schema";
 import { HumanChatMessage } from "langchain/schema";
+import dotenv from 'dotenv';
+dotenv.config();
 
-
-const OPENAI_API_KEY = "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"
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 let model
 let vectorStore
 
