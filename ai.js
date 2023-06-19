@@ -12,17 +12,20 @@ import { SystemChatMessage } from "langchain/schema";
 import { HumanChatMessage } from "langchain/schema";
 
 
-const OPENAI_API_KEY = "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"
-const model = new ChatOpenAI({ openAIApiKey: OPENAI_API_KEY, temperature: 0.2 });
-const loader = new CSVLoader("ob2.csv");
-const docs2 = await loader.load();
-const embed = new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
-const vectorStore = await HNSWLib.fromDocuments(docs2, embed);
-console.log(docs2[0])
+const OPENAI_API_KEY = "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"
+let model
+let vectorStore
 
+export let load = async () => {
+    model = new ChatOpenAI({ openAIApiKey: OPENAI_API_KEY, temperature: 0.2 });
+    const loader = new CSVLoader("ob2.csv");
+    const docs2 = await loader.load();
+    const embed = new OpenAIEmbeddings({ openAIApiKey: OPENAI_API_KEY })
+    vectorStore = await HNSWLib.fromDocuments(docs2, embed);
+    console.log(docs2[0])
+}
 
-
-export let askAi = async (question) => {
+export let askAi = async (question, prompt) => {
 
     const result = await vectorStore.similaritySearch(question, 20);
     console.log("m" + result.length)
@@ -32,10 +35,10 @@ export let askAi = async (question) => {
     }
 
     let systemtext =
-        `You are a helpful AI assistant. You need to answer customer questions related to the following content:
-    
+        `
+        ${prompt}
+
         ${data}
-    
         `;
 
     console.log(systemtext);

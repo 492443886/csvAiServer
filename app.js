@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors'
-import { askAi } from './ai.js'
+import { askAi, load } from './ai.js'
 
 const app = express();
 app.use(cors())
@@ -8,21 +8,28 @@ app.use(cors())
 app.use(express.json());
 
 
-// POST /tasks - Create a new task
-app.post('/tasks', async (req, res) => {
 
-    try {
-        console.log(req.body)
-        let result = await askAi(req.body.question)
-        console.log(result)
-        res.status(201).json(result.text);
+// // POST /tasks - Create a new task
+// app.post('/tasks', async (req, res) => {
 
-    } catch (e) {
-        console.log(e)
-        res.status(500).json(e);
-    }
+//     try {
+//         console.log(req.body)
+//         let result = await askAi(req.body.question, req.prompt)
+//         console.log(result)
+//         res.status(201).json(result.text);
 
+//     } catch (e) {
+//         console.log(e)
+//         res.status(500).json(e);
+//     }
+
+// });
+
+app.get('/t', async (req, res) => {
+
+    res.status(500).json("Works");
 });
+
 
 // Start the server
 const port = 3000;
