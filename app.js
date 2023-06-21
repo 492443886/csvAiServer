@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors'
 import { askAi, load } from './ai.js'
+import fs from 'fs'
+import https from 'https'
 
 const app = express();
 app.use(cors())
@@ -37,3 +39,42 @@ const port = 3000;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
+
+//ssh
+
+
+const cert = fs.readFileSync("certificate.crt")
+const key = fs.readFileSync("private.key")
+
+const cred = { key, cert }
+
+const httpsServer = https.createServer(cred, app)
+httpsServer.listen(8443)
+// import express from 'express';
+// import fs from 'fs'
+// import https from 'https'
+
+// const cert = fs.readFileSync("certificate.crt")
+// const key = fs.readFileSync("private.key")
+
+// const cred = { key, cert }
+// const app = express();
+
+// app.get('/t', (req, res) => {
+//     res.send('Hello@!!');
+// });
+
+
+// // My ssl verify
+// // app.get('/.well-known/pki-validation/E2AE2615BE4252688ECB637043D69A02.txt', (req, res) => {
+// //     res.sendFile('/home/ec2-user/Hello/E2AE2615BE4252688ECB637043D69A02.txt')
+// // })
+
+// let port = 3000
+// app.listen(port, () => {
+//     console.log('Server is running on port ' + port);
+// });
+
+// const httpsServer = https.createServer(cred, app)
+// httpsServer.listen(8443)
