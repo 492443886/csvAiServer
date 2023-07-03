@@ -10,7 +10,7 @@ const load = async () => {
   const text = await readFile("./t.txt", "utf8")
   const splitter = new CharacterTextSplitter({
     separator: "#",
-    chunkSize: 300,
+    chunkSize: 400,
     chunkOverlap: 0,
   })
   const output = await splitter.createDocuments([text])
