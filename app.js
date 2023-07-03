@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors'
 import { askAi, load } from './ai.js'
+import { search } from './ai2.js'
 import fs from 'fs'
 import https from 'https'
 
@@ -11,6 +12,18 @@ app.use(express.json());
 
 await load()
 
+
+app.post("/vod", async (req, res) => {
+    try {
+      console.log(req.body)
+      let result = await search(req.body.question)
+      console.log(result)
+      res.status(200).json({ result: result })
+    } catch (e) {
+      console.log(e)
+      res.status(500).json(e)
+    }
+  })
 
 // POST /tasks - Create a new task
 app.post('/tasks', async (req, res) => {
