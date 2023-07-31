@@ -13,7 +13,9 @@ app.use(express.json());
 await load()
 
 
-app.post("/vod", async (req, res) => {
+const url = "/csv"
+
+app.post( url + "/vod", async (req, res) => {
     try {
       console.log(req.body)
       let result = await search(req.body.question)
@@ -26,7 +28,7 @@ app.post("/vod", async (req, res) => {
   })
 
 // POST /tasks - Create a new task
-app.post('/tasks', async (req, res) => {
+app.post(url + '/tasks', async (req, res) => {
 
     try {
         console.log(req.body)
@@ -41,14 +43,14 @@ app.post('/tasks', async (req, res) => {
 
 });
 
-app.get('/t', async (req, res) => {
+app.get(url + '/t', async (req, res) => {
 
     res.status(500).json("Works");
 });
 
 
 // Start the server
-const port = 3000;
+const port = 3050;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -57,13 +59,13 @@ app.listen(port, () => {
 //ssh
 
 
-const cert = fs.readFileSync("certificate.crt")
-const key = fs.readFileSync("private.key")
+// const cert = fs.readFileSync("certificate.crt")
+// const key = fs.readFileSync("private.key")
 
-const cred = { key, cert }
+// const cred = { key, cert }
 
-const httpsServer = https.createServer(cred, app)
-httpsServer.listen(8443)
+// const httpsServer = https.createServer(cred, app)
+// httpsServer.listen(8443)
 // import express from 'express';
 // import fs from 'fs'
 // import https from 'https'
